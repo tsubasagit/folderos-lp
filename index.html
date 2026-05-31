@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FolderOS — 会社のフォルダの上で動く、AIの番頭。</title>
+<meta name="description" content="FolderOSは、中小企業の社内フォルダをAIに読める形で高速に可視化する『番頭』。期限・滞留・入金・契約の見落としを毎朝拾う。ローカルLLM対応で情報を外に出さない、フォルダ経営の新しいかたち。" />
+<meta property="og:title" content="FolderOS — 会社のフォルダの上で動く、AIの番頭。" />
+<meta property="og:description" content="既にある会社のフォルダを、賢くする。フォルダ経営という新しい働き方。" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://folderos.ai" />
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --line:#222b36;
+    --ink:#e8eef5; --sub:#9fb0c0; --accent:#f97316; --blue:#538bb0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+  header{position:sticky;top:0;background:rgba(13,17,23,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:800;letter-spacing:.5px;font-size:20px}
+  .logo span{color:var(--accent)}
+  .btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:10px;transition:.2s}
+  .btn:hover{opacity:.9;transform:translateY(-1px)}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+
+  .hero{padding:96px 0 72px;text-align:center}
+  .badge{display:inline-block;font-size:13px;color:var(--blue);border:1px solid var(--line);border-radius:999px;padding:6px 14px;margin-bottom:24px}
+  .hero h1{font-size:clamp(30px,5vw,52px);line-height:1.3;font-weight:800;letter-spacing:.5px}
+  .hero h1 span{color:var(--accent)}
+  .hero p.lead{margin:24px auto 0;max-width:620px;color:var(--sub);font-size:18px}
+  .hero .cta{margin-top:36px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .tagline{margin-top:40px;color:var(--sub);font-size:15px;letter-spacing:1px}
+
+  section{padding:72px 0;border-top:1px solid var(--line)}
+  .eyebrow{color:var(--accent);font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase}
+  h2{font-size:clamp(24px,3.5vw,34px);font-weight:800;margin:10px 0 8px}
+  .muted{color:var(--sub)}
+
+  .grid{display:grid;gap:18px;margin-top:36px}
+  .cols-3{grid-template-columns:repeat(3,1fr)}
+  .cols-2{grid-template-columns:repeat(2,1fr)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px}
+  .card h3{font-size:18px;margin-bottom:8px}
+  .card p{color:var(--sub);font-size:15px}
+  .card .k{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1px}
+
+  .dept{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:32px}
+  .dept .d{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 14px;text-align:center}
+  .dept .d b{display:block;font-size:15px;margin-bottom:6px}
+  .dept .d span{color:var(--sub);font-size:12.5px;line-height:1.6}
+
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:32px}
+  .vs .col{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px}
+  .vs .col.them{opacity:.85}
+  .vs .col h3{font-size:16px;margin-bottom:12px}
+  .vs .col.us h3{color:var(--accent)}
+
+  .belief{text-align:center}
+  .belief blockquote{font-size:clamp(20px,3vw,28px);font-weight:700;line-height:1.6;max-width:760px;margin:24px auto 0}
+  .belief blockquote span{color:var(--accent)}
+
+  .final{text-align:center}
+  .final h2{margin-bottom:18px}
+
+  footer{border-top:1px solid var(--line);padding:40px 0;color:var(--sub);font-size:13px;text-align:center}
+  footer a{color:var(--sub)}
+
+  @media(max-width:760px){
+    .cols-3,.cols-2{grid-template-columns:1fr}
+    .dept{grid-template-columns:repeat(2,1fr)}
+    .vs{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">Folder<span>OS</span></div>
+    <a class="btn" href="#contact">早期アクセス</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="badge">フォルダ経営 ── 「使う」から「つくる」へ</div>
+      <h1>会社のフォルダの上で動く、<br><span>AIの番頭。</span></h1>
+      <p class="lead">新しい文書を書くのではない。<strong>既にある会社のフォルダを、賢くする。</strong>期限・滞留・入金・契約の見落としを、番頭が毎朝ひろう。</p>
+      <div class="cta">
+        <a class="btn" href="#contact">早期アクセスに申し込む</a>
+        <a class="btn ghost" href="#how">仕組みを見る</a>
+      </div>
+      <div class="tagline">朝礼からはじまる、新しい一日。自分のOSで、会社を始めよう。</div>
+    </div>
+  </section>
+
+  <section id="problem">
+    <div class="wrap">
+      <div class="eyebrow">The Problem</div>
+      <h2>会社の資源は、フォルダの中で眠っている。</h2>
+      <p class="muted">どの会社にも、散らかったファイルサーバーがある。契約書も、請求も、議事録も、そこにある。けれど「いま手を打つべきこと」は、誰も毎朝は拾えていない。汎用AIは何でも答えるが、あなたの会社の段取りは知らない。</p>
+      <div class="grid cols-3">
+        <div class="card"><div class="k">滞留</div><h3>放置された顧客</h3><p>最後の接触から時間が経った案件が、静かに冷えていく。</p></div>
+        <div class="card"><div class="k">期限</div><h3>切れる契約・許認可</h3><p>更新・失効の期日は、気づいた時には過ぎている。</p></div>
+        <div class="card"><div class="k">お金</div><h3>請求し忘れ・未入金</h3><p>見積→納品→請求の抜け漏れが、利益を削る。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="eyebrow">The Banto</div>
+      <h2>番頭が、毎朝あなたの会社を巡回する。</h2>
+      <p class="muted">FolderOSは、あなたのフォルダ構造を「組織図」として読む。トップ階層のフォルダ＝部署。番頭は5つの部署を巡回し、経営の急所を拾って朝礼で報告する。</p>
+      <div class="dept">
+        <div class="d"><b>経営室</b><span>朝礼・終礼で毎日のリズム</span></div>
+        <div class="d"><b>営業</b><span>顧客の鮮度・案件の抜け漏れ</span></div>
+        <div class="d"><b>企画</b><span>走っている施策の進捗</span></div>
+        <div class="d"><b>管理</b><span>入金・資金繰り・契約期限・労務</span></div>
+        <div class="d"><b>業務</b><span>会議・文書・IT資産を整える</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sovereignty">
+    <div class="wrap">
+      <div class="eyebrow">Data Sovereignty</div>
+      <h2>情報は、外に出さない。</h2>
+      <p class="muted">FolderOSの設定は、舶来の管理コンソールではなく<strong>あなたのフォルダの中</strong>に宿る。ローカルLLMに対応し、機微な情報を外部に出さずに動かせる。守りの中心を、海外クラウドの外側から、あなたの内側へ。</p>
+      <div class="grid cols-2">
+        <div class="card"><h3>主権はあなたの内側に</h3><p>設定がフォルダに宿る。どこに何を出すかを、あなたが選べる。</p></div>
+        <div class="card"><h3>ローカルLLM対応</h3><p>機微情報はローカルで処理。高度な推論だけ、許す範囲で外へ。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="vs">
+    <div class="wrap">
+      <div class="eyebrow">Why FolderOS</div>
+      <h2>新しく作るのではなく、今あるものを賢くする。</h2>
+      <div class="vs">
+        <div class="col them"><h3>汎用AI / 新しいツール</h3><p class="muted">新しい文書・新しいデータベースを作らせる。あなたの会社の段取りは知らない。設定もデータも、舶来のクラウドの中。</p></div>
+        <div class="col us"><h3>FolderOS</h3><p class="muted">既にある会社のフォルダを読む。部署ごとの仕事を毎日巡回する。設定はフォルダの中、情報は外に出さない。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="belief">
+    <div class="wrap">
+      <div class="eyebrow">Our Belief</div>
+      <blockquote>舶来ツール依存から、<span>自分たちのプロダクト創出へ。</span><br>あなたしか知らない課題を、あなた自身の手で。</blockquote>
+    </div>
+  </section>
+
+  <section id="contact" class="final">
+    <div class="wrap">
+      <h2>早期アクセスを募集しています。</h2>
+      <p class="muted">フォルダ経営を、最初に始める会社になりませんか。</p>
+      <div class="cta" style="justify-content:center;margin-top:28px">
+        <a class="btn" href="mailto:tsubasa.pc@gmail.com?subject=FolderOS%20早期アクセス希望">メールで問い合わせる</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:16px;margin-bottom:8px">Folder<span>OS</span></div>
+    <div>FolderOS — the AI for your company folders.</div>
+    <div style="margin-top:8px">© 2026 AppTalentHub Inc. ・ <a href="https://apptalenthub.co.jp">apptalenthub.co.jp</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
